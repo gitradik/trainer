@@ -1,0 +1,22 @@
+version: '3'
+services:
+  node-express-api:
+    build:
+      context: ./app-api
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    container_name: node-express-api
+    volumes:
+       - ./app-api:/usr/src/app/app-api
+       - /usr/src/app/app-api/node_modules
+  angular-ui:
+    build:
+      context: ./app-ui
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5000:5000"
+    container_name: angular-ui
+    volumes:
+       - ./app-ui:/usr/src/app/app-ui
+       - /usr/src/app/app-ui/node_modules
