@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.bundle.js",
     "build": "webpack",
-    "dev": "nodemon localhost 3000"
+    "dev": "nodemon --mode development"
   },
   "author": "",
   "license": "ISC",

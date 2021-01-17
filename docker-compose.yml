@@ -8,8 +8,10 @@ services:
       - "3000:3000"
     container_name: node-express-api
     volumes:
-       - ./app-api:/usr/src/app/app-api
-       - /usr/src/app/app-api/node_modules
+      - ./app-api:/usr/src/app/app-api
+      - /usr/src/app/app-api/node_modules
+    env_file:
+      - ./app-api/.env.development
   angular-ui:
     build:
       context: ./app-ui
