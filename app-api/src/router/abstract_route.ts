@@ -1,12 +1,14 @@
 type meth = 'GET' | 'PUT' | 'DEL' | 'POST'; 
 
-export interface Endpoint {
-    uri: string;
-    method: meth;
-    middleware: Function;
-    end: Function;
-}
-
 export abstract class AbstractRoute {
-    abstract getEndpoint(): Endpoint;
+    uri: string;
+    meth: meth;
+
+    constructor(_uri: string, _meth: meth) {
+        this.uri = _uri;
+        this.meth = _meth;
+    }
+
+    abstract middleware (req: any, res: any, next: Function): Promise<void>;
+    abstract end (req: any, res: any, next: Function): Promise<void>;
 }
