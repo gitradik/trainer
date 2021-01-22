@@ -3,6 +3,6 @@ import Login from './login';
 
 const routes: AbstractRoute[] = [
     Login
-]
+];
 
 export default routes;
