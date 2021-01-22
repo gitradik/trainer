@@ -4,6 +4,7 @@ services:
     build:
       context: ./app-api
       dockerfile: Dockerfile.dev
+    restart: always
     ports:
       - "3000:3000"
     container_name: node-express-api
@@ -12,13 +13,30 @@ services:
       - /usr/src/app/app-api/node_modules
     env_file:
       - ./app-api/.env.development
-  angular-ui:
-    build:
-      context: ./app-ui
-      dockerfile: Dockerfile.dev
+    depends_on:
+      - database
+    links:
+      - database
+  database:
+    image: postgres
+    restart: always
+    container_name: my_database
     ports:
-      - "5000:5000"
-    container_name: angular-ui
+    - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: 'user'
     volumes:
-       - ./app-ui:/usr/src/app/app-ui
-       - /usr/src/app/app-ui/node_modules
+      - ./dbdata:/var/lib/postgresql/data
+    build:
+      context: ./app-db
+      dockerfile: Dockerfile.dev
+  # angular-ui:
+  #   build:
+  #     context: ./app-ui
+  #     dockerfile: Dockerfile.dev
+  #   ports:
+  #     - "5000:5000"
+  #   container_name: angular-ui
+  #   volumes:
+  #      - ./app-ui:/usr/src/app/app-ui
+  #      - /usr/src/app/app-ui/node_modules

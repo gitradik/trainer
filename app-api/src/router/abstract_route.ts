@@ -8,5 +8,5 @@ export interface Endpoint {
 }
 
 export abstract class AbstractRoute {
-    abstract endpoints(): Endpoint[];
+    abstract getEndpoint(): Endpoint;
 }

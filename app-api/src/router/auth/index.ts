@@ -1,24 +1,8 @@
-import { AbstractRoute, Endpoint } from '../abstract_route';
+import {AbstractRoute} from '../abstract_route';
+import Login from './login';
 
-class Auth extends AbstractRoute {
-    login(req, res, next): void {
-        next('not_found');
-    }
+const routes: AbstractRoute[] = [
+    Login
+]
 
-    loginEnd(req, res, next): void {
-        res.send('success');
-    }
-
-    endpoints(): Endpoint[] {
-        return [
-            {
-                uri: 'login',
-                method: 'POST',
-                middleware: this.login,
-                end: this.loginEnd
-            }
-        ];
-    }
-}
-
-export default new Auth();
+export default routes;

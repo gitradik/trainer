@@ -12,27 +12,28 @@ const API_PREFIX = '/api';
 
 export class RouterModule  {
     private name: string;
-    private router: Router;
-    private module: AbstractRoute;
 
-    constructor(_name: string, _router: Router, _module: AbstractRoute) {
+    constructor(_name: string, router: Router, routes: AbstractRoute[]) {
         this.name = _name;
-        this.router = _router;
-        this.module = _module;
 
-        this.init();
+        if (_name) {
+            this.init(router, routes);
+        }
     }
 
-    private init(): void {
-        this.module.endpoints().forEach(e => {
+    private init(router: Router, routes: AbstractRoute[]): void {
+        for (let i = 0; i < routes.length; i++) {
+            const r = routes[i];
+            const e = r.getEndpoint();
             const meth = Methods[e.method];
+            
             if (meth) {
-                this.router[meth](
+                router[meth](
                     `${API_PREFIX}/${this.name}/${e.uri}`, 
-                    e.middleware.bind(this.module),
-                    e.end.bind(this.module)
+                    e.middleware.bind(r),
+                    e.end.bind(r)
                 );
             }
-        });
+        }
     }
 }
