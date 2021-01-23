@@ -9,6 +9,6 @@ export abstract class AbstractRoute {
         this.meth = _meth;
     }
 
-    abstract middleware (req: any, res: any, next: Function): Promise<void>;
-    abstract end (req: any, res: any, next: Function): Promise<void>;
+    abstract middleware (req: any, res: any, next: Function): Promise<void> | void;
+    abstract happy (req: any, res: any, next: Function): Promise<void> | void;
 }

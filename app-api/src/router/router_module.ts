@@ -28,7 +28,7 @@ export class RouterModule  {
                 router[meth](
                     `${process.env.APP_API_PREFIX}/${this.name}/${r.uri}`, 
                     r.middleware.bind(r),
-                    r.end.bind(r)
+                    r.happy.bind(r)
                 );
             }
         }
