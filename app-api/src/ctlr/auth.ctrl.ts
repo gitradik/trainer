@@ -3,8 +3,8 @@ import { Ctrl } from './ctlr.interface';
 import { CtrlResponse, ResponseData, ResponseError } from './ctrl.response';
 
 class AccCtrl implements Ctrl {
-    get(id: number): Promise<ResponseData | ResponseError> {
-        return Acc.findOne({ where: { id } })
+    get({ email }: any): Promise<ResponseData | ResponseError> {
+        return Acc.findOne({ where: { email } })
             .then(CtrlResponse.responseData)
             .catch(CtrlResponse.responseError);
     }
