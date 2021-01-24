@@ -25,6 +25,10 @@ export class ResponseError extends BaseResponse {
 
 export class CtrlResponse {
     static responseData(data: any): ResponseData {
+        if (!data) {
+            throw new CtrlError();
+        }
+
         return new ResponseData(true, data);
     }
     static responseError(err: any): ResponseError {
