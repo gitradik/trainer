@@ -1,9 +1,9 @@
 import {AbstractRoute} from '../abstract_route';
-import Login from './login';
+import SignIn from './sign_in';
 import SignUp from './sign_up';
 
 const routes: AbstractRoute[] = [
-    Login,
+    SignIn,
     SignUp,
 ];
 

@@ -1,13 +1,35 @@
-import CtrlError from './error';
 
-class CtrlResponse {
-    static responseData(data: any): any {
-        return data;
+// import { ValidationError, ValidationErrorItem } from 'sequelize';
+import CtrlError from './ctrl.error';
+
+class BaseResponse {
+    succsess: boolean;
+    constructor(_succsess: boolean) {
+        this.succsess = _succsess;
     }
-    static responseError(err: any): CtrlError {
-        console.log('responseError', err);
-        return new CtrlError(err.message || 'error');
+}
+export class ResponseData extends BaseResponse {
+    data: any;
+    constructor(_succsess: boolean, data: any) {
+        super(_succsess);
+        this.data = data;
+    }
+}
+export class ResponseError extends BaseResponse {
+    err: CtrlError;
+    constructor(_succsess: boolean, err: CtrlError) {
+        super(_succsess);
+        this.err = err;
     }
 }
 
-export default CtrlResponse; 
+export class CtrlResponse {
+    static responseData(data: any): ResponseData {
+        return new ResponseData(true, data);
+    }
+    static responseError(err: any): ResponseError {
+        const { errors } = err;
+        const ctrlErr = new CtrlError(err.message || 'error', errors);
+        return new ResponseError(false, ctrlErr);
+    }
+} 

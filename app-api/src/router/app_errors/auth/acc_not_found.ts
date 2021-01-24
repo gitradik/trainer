@@ -1,8 +1,8 @@
 import ApplicationError from '../application_error';
 
 class AccNotFound extends ApplicationError {
-    constructor(message: string) {
-        super(message || 'ACCOUNT NOT FOUND', 404, 'AccNotFound');
+    constructor() {
+        super('Account not found', 404, 'AccNotFound');
     }
 }
 

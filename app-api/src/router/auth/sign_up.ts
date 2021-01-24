@@ -1,17 +1,22 @@
 import { AbstractRoute } from '../abstract_route';
-import { Acc, AccModel } from '../../sqlz/models/acc';
+import { Acc } from '../../sqlz/models/acc';
 import accCtrl from '../../ctlr/auth.ctrl';
+import { ResponseData, ResponseError } from '../../ctlr/ctrl.response';
 
 class SignUp extends AbstractRoute {
     acc: Acc;
 
     async middleware(req: any, res: any, next: Function): Promise<void> {
-        let acc = await accCtrl.create(req.body);
-        if (acc) {
-            this.acc = acc;
+        const result = await accCtrl.create(req.body);
+        
+        if (result.succsess) {
+            this.acc = (result as ResponseData).data;
             next();
         } else {
-            next('auth_conflict_data');
+            next({
+                key: 'auth_conflict_data',
+                err: (result as ResponseError).err
+            });
         }
     }
 
