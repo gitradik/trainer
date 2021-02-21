@@ -28,12 +28,10 @@ export class CtrlResponse {
         if (!data) {
             throw new CtrlError();
         }
-
         return new ResponseData(true, data);
     }
     static responseError(err: any): ResponseError {
-        const { errors } = err;
-        const ctrlErr = new CtrlError(err.message || 'error', errors);
+        const ctrlErr = new CtrlError(err.message, err.errors);
         return new ResponseError(false, ctrlErr);
     }
 } 

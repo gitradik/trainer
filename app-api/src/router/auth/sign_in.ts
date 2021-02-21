@@ -1,5 +1,5 @@
 import { AbstractRoute } from '../abstract_route';
-import { Acc, AccModel } from '../../sqlz/models/acc';
+import { Acc, AccModel, AccShemas } from '../../sqlz/models/acc';
 import accCtrl from '../../ctlr/auth.ctrl';
 import { ResponseData } from '../../ctlr/ctrl.response';
 
@@ -7,7 +7,9 @@ class SignIn extends AbstractRoute {
     acc: Acc;
 
     async middleware(req: any, res: any, next: Function): Promise<void> {
-        if (await AccModel.signInShema.isValid(req.body)) {
+        try {
+            await AccModel.validate(req.body, AccShemas.SIGN_IN);
+
             const result = await accCtrl.get({
                 email: req.body.email
             });
@@ -18,12 +20,12 @@ class SignIn extends AbstractRoute {
             } else {
                 next({ key: 'auth_not_found' });
             }
-        } else {
-            next({ key: 'auth_conflict_data' });
+        } catch (err) {
+            next({ key: 'auth_conflict_data', err });
         }
     }
 
-    happy(req: any, res: any, next: Function): void {
+    end(req: any, res: any): void {
         res.send(this.acc);
     }
 }

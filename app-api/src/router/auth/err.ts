@@ -1,5 +1,4 @@
-import errors from '../app_errors';
-import ApplicationError from '../app_errors/application_error'
+import errors from '../../errors';
 
 const m = new Map<string, any>();
 m.set('auth_not_found', errors.AccNotFound);
