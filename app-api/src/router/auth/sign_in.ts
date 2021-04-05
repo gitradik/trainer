@@ -1,10 +1,12 @@
+import jwt from 'jsonwebtoken';
 import { AbstractRoute } from '../abstract_route';
-import { Acc, AccModel, AccShemas } from '../../sqlz/models/acc';
+import { AccModel, AccShemas } from '../../sqlz/models/acc';
 import accCtrl from '../../ctlr/auth.ctrl';
 import { ResponseData } from '../../ctlr/ctrl.response';
 
 class SignIn extends AbstractRoute {
-    acc: Acc;
+    verify = false;
+    acc: AccModel;
 
     async middleware(req: any, res: any, next: Function): Promise<void> {
         try {
@@ -26,7 +28,14 @@ class SignIn extends AbstractRoute {
     }
 
     end(req: any, res: any): void {
-        res.send(this.acc);
+        res.send({ 
+            ...(this.acc as any).dataValues,
+            token: jwt.sign(
+                { id: this.acc.id },
+                process.env.APP_TOKEN_SALT,
+                { expiresIn: process.env.APP_TOKEN_ACCESS_EXPIRES_IN }
+            ),
+        });
     }
 }
 

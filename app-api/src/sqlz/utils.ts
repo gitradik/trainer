@@ -1,4 +1,4 @@
-import { IErrors } from '../utils/errors';
+import { IErrors, IErrorListItem } from '../utils/errors';
 
 export async function modelValidate(payload, shema): Promise<SqlzError> {
     try {
@@ -11,7 +11,7 @@ export async function modelValidate(payload, shema): Promise<SqlzError> {
 
 export class SqlzError extends Error implements IErrors {
     message: string;
-    errors: { message: string, path: string }[];
+    errors: IErrorListItem[];
 
     constructor(err) {
         super();

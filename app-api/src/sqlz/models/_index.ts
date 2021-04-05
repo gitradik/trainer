@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
 
-const config = require('../config/config.json');
+import config from  '../config/config.json';
 
 const dbConfig = config[process.env.NODE_ENV];
 const sequelize = new Sequelize(

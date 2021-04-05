@@ -1,12 +1,14 @@
-FROM node:12
+FROM node:12-alpine
 
-RUN mkdir -p /usr/src/app/app-api
 WORKDIR /usr/src/app/app-api
 
 COPY package*.json /usr/src/app/app-api/
 
-RUN npm install -g nodemon && npm install
+RUN rm -rf node_modules/
+RUN npm install
+
+COPY . /usr/src/app/app-api/
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+CMD npm run dev

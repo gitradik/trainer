@@ -18,6 +18,8 @@ export class AccModel {
   createdAt: Date;
   updatedAt: Date;
 
+  token?: string;
+
   static schemas = {
     'sign-up': yup.object().shape({
       name: yup.string().required(),

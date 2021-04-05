@@ -1,4 +1,9 @@
+export interface IErrorListItem {
+    message: string;
+    path: string;
+}
+
 export interface IErrors {
     message: string;
-    errors?: { message: string, path: string }[];
+    errors?: IErrorListItem[];
 }
