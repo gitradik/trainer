@@ -5,18 +5,19 @@ var NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 module.exports = (config, { mode }) => {
     return {
+        mode,
         target: 'node',
         externals: [nodeExternals()],
-        entry: path.join(__dirname, 'src/index.ts'),
-        mode,
+        entry: __dirname + '/src/index.ts',
         output: {
-            path: path.join(__dirname, 'dist'),
-            filename: "bundle.js",
-            chunkFilename: '[name].js'
+            path: __dirname + '/dist',
+            filename: '[name].bundle.js',
+            chunkFilename: '[name].js',
         },
         context: __dirname,
+        devtool: 'inline-source-map',
         devServer: {
-            hot: true
+            contentBase: __dirname + '/dist',
         },
         module: {
             rules: [

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "webpack --mode development && node dist/bundle.js",
+    "dev": "webpack serve --mode development --open",
     "sqlz:migrate": "sequelize db:migrate",
     "sqlz:undo": "sequelize db:migrate:undo",
     "sqlz:new": ".sequelize migration:create",

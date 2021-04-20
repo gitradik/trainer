@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import * as jwt from 'jsonwebtoken';
+// import * as jwt from 'jsonwebtoken';
 import router from './router';
 import * as errHandler from './router/error_handler';
 
