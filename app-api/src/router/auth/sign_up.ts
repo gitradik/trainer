@@ -20,7 +20,7 @@ class SignUp extends AbstractRoute {
             } else {
                 next({
                     key: 'auth_conflict_data',
-                    err: (result as ResponseError).err
+                    err: (result as ResponseError).err,
                 });
             }
         } catch (err) {

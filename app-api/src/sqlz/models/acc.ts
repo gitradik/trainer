@@ -29,7 +29,7 @@ export class AccModel {
     'sign-in': yup.object().shape({
       email: yup.string().email().required(),
       pwd: yup.string().trim().min(8).required(),
-    })
+    }),
   };
 
   static async validate(payload: any, schemaName: string): Promise<SqlzError> {

@@ -1,21 +1,22 @@
-const path = require('path');
-const webpack = require('webpack');
-const fs = require('fs');
-const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+var path = require('path');
+var webpack = require('webpack');
+var nodeExternals = require('webpack-node-externals');
+var NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 module.exports = (config, { mode }) => {
     return {
         target: 'node',
+        externals: [nodeExternals()],
         entry: path.join(__dirname, 'src/index.ts'),
         mode,
         output: {
             path: path.join(__dirname, 'dist'),
-            filename: "[name].bundle.js",
+            filename: "bundle.js",
             chunkFilename: '[name].js'
         },
         context: __dirname,
         devServer: {
-            contentBase: path.resolve(__dirname, 'dist')
+            hot: true
         },
         module: {
             rules: [
@@ -27,7 +28,11 @@ module.exports = (config, { mode }) => {
             ],
         },
         resolve: {
-            modules: [__dirname, path.join(__dirname, 'src'), 'node_modules'], 
+            modules: [
+                __dirname, 
+                path.join(__dirname, 'src'), 
+                path.join(__dirname, 'node_modules')
+            ], 
             extensions: ['.ts', '.js'],
         },
         plugins: [
@@ -43,7 +48,7 @@ module.exports = (config, { mode }) => {
                 'APP_TYPE_TOKEN_REFRESH',
                 'APP_TOKEN_ACCESS_EXPIRES_IN',
                 'APP_TOKEN_REFRESH_EXPIRES_IN'
-            ]),
+            ])
         ],
     }
 };

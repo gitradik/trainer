@@ -1,24 +1,24 @@
 
-// import { ValidationError, ValidationErrorItem } from 'sequelize';
+import { ValidationError, ValidationErrorItem } from 'sequelize';
 import CtrlError from './ctrl.error';
 
 class BaseResponse {
     succsess: boolean;
-    constructor(_succsess: boolean) {
-        this.succsess = _succsess;
+    constructor(succsess: boolean) {
+        this.succsess = succsess;
     }
 }
 export class ResponseData extends BaseResponse {
     data: any;
-    constructor(_succsess: boolean, data: any) {
-        super(_succsess);
+    constructor(succsess: boolean, data: any) {
+        super(succsess);
         this.data = data;
     }
 }
 export class ResponseError extends BaseResponse {
     err: CtrlError;
-    constructor(_succsess: boolean, err: CtrlError) {
-        super(_succsess);
+    constructor(succsess: boolean, err: CtrlError) {
+        super(succsess);
         this.err = err;
     }
 }

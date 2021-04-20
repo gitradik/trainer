@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "webpack --mode development && node dist/main.bundle.js",
+    "dev": "webpack --mode development && node dist/bundle.js",
     "sqlz:migrate": "sequelize db:migrate",
-    "sqlz:undo": "./node_modules/.bin/sequelize db:migrate:undo",
-    "sqlz:new": "./node_modules/.bin/sequelize migration:create",
-    "sqlz:seed": "./node_modules/.bin/sequelize db:seed:all"
+    "sqlz:undo": "sequelize db:migrate:undo",
+    "sqlz:new": ".sequelize migration:create",
+    "sqlz:seed": "sequelize db:seed:all"
   },
   "author": "",
   "license": "ISC",
@@ -37,15 +37,15 @@
     "@types/sequelize": "^4.28.9",
     "node-polyfill-webpack-plugin": "^1.1.0",
     "nodemon": "^2.0.7",
-    "sequelize-cli": "^6.2.0",
+    "sequelize-cli": "^5.5.1",
     "ts-loader": "^8.1.0",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.2.3",
-    "webpack": "^5.30.0",
+    "webpack": "^4.46.0",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3",
-    "webpack-node-externals": "^2.5.2"
+    "webpack-node-externals": "^1.7.2"
   }
 }

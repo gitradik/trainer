@@ -4,6 +4,11 @@ import { AccModel, AccShemas } from '../../sqlz/models/acc';
 import accCtrl from '../../ctlr/auth.ctrl';
 import { ResponseData } from '../../ctlr/ctrl.response';
 
+const { 
+    APP_TOKEN_ACCESS_EXPIRES_IN, 
+    APP_TOKEN_SALT
+} = process.env;
+
 class SignIn extends AbstractRoute {
     verify = false;
     acc: AccModel;
@@ -30,11 +35,7 @@ class SignIn extends AbstractRoute {
     end(req: any, res: any): void {
         res.send({ 
             ...(this.acc as any).dataValues,
-            token: jwt.sign(
-                { id: this.acc.id },
-                process.env.APP_TOKEN_SALT,
-                { expiresIn: process.env.APP_TOKEN_ACCESS_EXPIRES_IN }
-            ),
+            token: jwt.sign({ id: this.acc.id }, APP_TOKEN_SALT, { expiresIn: APP_TOKEN_ACCESS_EXPIRES_IN }),
         });
     }
 }
