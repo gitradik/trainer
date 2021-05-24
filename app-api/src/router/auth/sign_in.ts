@@ -1,13 +1,22 @@
+import jwt from 'jsonwebtoken';
 import { AbstractRoute } from '../abstract_route';
-import { Acc, AccModel } from '../../sqlz/models/acc';
+import { AccModel, AccShemas } from '../../sqlz/models/acc';
 import accCtrl from '../../ctlr/auth.ctrl';
 import { ResponseData } from '../../ctlr/ctrl.response';
 
+const { 
+    APP_TOKEN_ACCESS_EXPIRES_IN, 
+    APP_TOKEN_SALT
+} = process.env;
+
 class SignIn extends AbstractRoute {
-    acc: Acc;
+    verify = false;
+    acc: AccModel;
 
     async middleware(req: any, res: any, next: Function): Promise<void> {
-        if (await AccModel.signInShema.isValid(req.body)) {
+        try {
+            await AccModel.validate(req.body, AccShemas.SIGN_IN);
+
             const result = await accCtrl.get({
                 email: req.body.email
             });
@@ -18,13 +27,16 @@ class SignIn extends AbstractRoute {
             } else {
                 next({ key: 'auth_not_found' });
             }
-        } else {
-            next({ key: 'auth_conflict_data' });
+        } catch (err) {
+            next({ key: 'auth_conflict_data', err });
         }
     }
 
-    happy(req: any, res: any, next: Function): void {
-        res.send(this.acc);
+    end(req: any, res: any): void {
+        res.send({ 
+            ...(this.acc as any).dataValues,
+            token: jwt.sign({ id: this.acc.id }, APP_TOKEN_SALT, { expiresIn: APP_TOKEN_ACCESS_EXPIRES_IN }),
+        });
     }
 }
 

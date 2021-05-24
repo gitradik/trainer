@@ -1,19 +1,21 @@
-import { ValidationErrorItem } from 'sequelize';
+import { IErrors } from '../utils/errors';
 
-class CtrlError {
-    msg: string;
-    errors: { message: string, path: string }[];
+class CtrlError implements IErrors {
+    message: string;
+    errors?: { message: string, path: string }[];
 
-    constructor(_msg?: string, errors?: any[]) {
-        this.msg = _msg;
+    constructor(_message?: string, errors?: any[]) {
+        this.message = _message;
         
         if (Array.isArray(errors)) {
             this.errors = this.parse(errors);
+        } else {
+            this.errors = [];
         }
     }
 
     private parse(errors: any[]): { message: string, path: string }[] {
-        return errors.map(function(err: ValidationErrorItem) {
+        return errors.map(function(err) {
             return {
                 message: err.message,
                 path: err.path

@@ -7,7 +7,7 @@ const errMap = new Map(
     ]
 );
 
-export function handler({ key, err }, req, res, next): void {
+export function handler({ key, err }: { key: string, err? }, req, res, next): void {
     const AppErr = errMap.get(key);
     const appErr = new AppErr(err);
     res.status(appErr.status).send(appErr);
